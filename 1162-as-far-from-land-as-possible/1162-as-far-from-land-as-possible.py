@@ -1,11 +1,14 @@
 class Solution:
     def maxDistance(self, grid: List[List[int]]) -> int:
-        n, res = len(grid), 0
-        land = {(i, j) for i, j in product(range(n), range(n)) if grid[i][j]}
-        water = {(i, j) for i, j in product(range(n), range(n)) if not grid[i][j]}
-        while water:
-            if not land: return -1
-            land = {(x, y) for i, j in land for x, y in ((i+1, j), (i-1, j), (i, j+1), (i, j-1)) if (x, y) in water}
-            water -= land
-            res += 1
-        return res or -1
+        n = len(grid)
+        dq = deque((i, j) for i in range(n) for j in range(n) if grid[i][j])
+        res = 0
+        while dq:
+            r0, c0 = dq.popleft()
+            for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+                r1, c1 = r0 + dr, c0 + dc
+                if 0 <= r1 < n and 0 <= c1 < n and not grid[r1][c1]:
+                    dq.append((r1, c1))
+                    grid[r1][c1] = grid[r0][c0] + 1
+                    res = max(res, grid[r1][c1])
+        return res - 1
