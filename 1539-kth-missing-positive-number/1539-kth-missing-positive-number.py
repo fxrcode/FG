@@ -7,5 +7,4 @@ class Solution:
                 r = m
             else:
                 l = m + 1
-        print(l, r)
         return l + k 
