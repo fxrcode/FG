@@ -15,6 +15,6 @@ class Solution:
                 break
             div2 = mx // 2
             heappush(evens, -div2)
-            #? what if div2 is the mn? Ans: it's fine. div2 will substitute the mn
+            # ? Q: what if div2 is the mn? A: it's fine. div2 will substitute the mn
             mn = min(mn, div2)
         return mnmxdev
