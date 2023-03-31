@@ -1,9 +1,9 @@
 class Solution:
     def dailyTemperatures(self, T: List[int]) -> List[int]:
-        ans, n = [0]*len(T), len(T)
-        for cur in range(n-2,-1,-1):
-            nxt = cur+1
-            while nxt < n and T[nxt] <= T[cur]:
-                nxt += ans[nxt] if ans[nxt] else n
-            ans[cur] = nxt-cur if nxt < n else 0
+        ans, s = [0] * len(T), deque()
+        for cur in range(len(T) - 1, -1, -1):
+            while s and T[s[-1]] <= T[cur]:
+                s.pop()
+            ans[cur] = s[-1] - cur if s else 0
+            s.append(cur)
         return ans
